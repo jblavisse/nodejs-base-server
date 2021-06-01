@@ -1,3 +1,14 @@
+/* 
+Consignes:
+Créer les prémices d'un blog en utilisant Bootstrap
+Les pages attendues:
+Une page d'accueil qui liste les 3 derniers articles (/)
+Une page pour tous les articles (/blog)
+Une page pour un article (/blog/1)
+/style.css qui fonctionne pour mon fichier de style
+404 not found pour toutes les autres URL
+*/
+
 const http = require('http');
 const fs = require('fs');
 
@@ -8,8 +19,6 @@ server.on('request', (request, response) => {
     console.log(request.url);
 
     if(request.url === "/") {
-        // La réponse lorsqu'on est sur http://localhost:port/
-        // Type et code status de la réponse
         response.writeHead(200, {
             'Content-Type': 'text/html'
         });
@@ -19,13 +28,27 @@ server.on('request', (request, response) => {
             else response.end(fileContent);
         })
     }
-    else if(request.url === "/contact") {
-        // La réponse lorsqu'on est sur http://localhost:port/contact
+    else if(request.url === "/blog") {
         response.writeHead(200, {
             'Content-Type': 'text/html'
         });
 
-        response.end('<html><body><h1>Ma page de contact</h1></body></html>')
+        
+        fs.readFile('blog.html','utf-8',(err, fileContent) => {
+            if(err) console.log(err);
+            else response.end(fileContent);
+        })
+    }
+    else if(request.url === "/blog/1") {
+        response.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+
+        
+        fs.readFile('article.html','utf-8',(err, fileContent) => {
+            if(err) console.log(err);
+            else response.end(fileContent);
+        })
     }
     else if(request.url === "/style.css") {
         response.writeHead(200, {
